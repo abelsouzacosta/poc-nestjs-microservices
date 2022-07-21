@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AddressService } from './address.service';
 import { CreatePatientDto } from './dtos/CreatePatient.dto';
 import { CreatePatientAddressDto } from './dtos/CreatePatientAddress.dto';
+import { CreatePhoneNumberController } from './dtos/CreatePhoneNumberController.dto';
 import { Patient } from './entities/Patient';
 import { PatientAddress } from './entities/PatientAddress';
 import { PatientRepository } from './patient.repository';
@@ -63,5 +64,16 @@ export class PatientService {
     const address: PatientAddress = { ...newAddress, zipcode, number };
 
     return this.repository.addAddressToClient({ id, ...address });
+  }
+
+  async addPhone(
+    id: string,
+    { phones }: CreatePhoneNumberController,
+  ): Promise<Patient> {
+    for (const phone of phones) {
+      this.repository.addPhoneToClient({ id, phone });
+    }
+
+    return this.repository.findById(id);
   }
 }
