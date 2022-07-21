@@ -2,6 +2,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreatePatientAddressRepositoryDto } from './dtos/CreatePatientAddressRepository.dto';
 import { CreatePatientRepositoryDto } from './dtos/CreatePatientRepository.dto';
+import { CreatePhoneNumberRepositoryDto } from './dtos/CreatePhoneNumberRepository.dto';
 import { Patient } from './entities/Patient';
 
 export class PatientRepository {
@@ -67,6 +68,17 @@ export class PatientRepository {
       },
       {
         $push: { addresses: newAddress },
+      },
+    );
+  }
+
+  async addPhoneToClient({ id, phone }: CreatePhoneNumberRepositoryDto) {
+    return this.model.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $push: { phones: phone },
       },
     );
   }
