@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { AddressService } from './address.service';
 import { CreatePatientDto } from './dtos/CreatePatient.dto';
+import { CreatePatientAddressDto } from './dtos/CreatePatientAddress.dto';
 import { Patient } from './entities/Patient';
+import { PatientAddress } from './entities/PatientAddress';
 import { PatientRepository } from './patient.repository';
 
 @Injectable()
@@ -13,6 +15,13 @@ export class PatientService {
 
   async list(): Promise<Array<Patient>> {
     return this.repository.getAll();
+  }
+
+  async getAddress(zipcode: string) {
+    const { state, city, district, street } =
+      await this.addressService.getAddressZipcode(zipcode);
+
+    return { state, city, district, street };
   }
 
   async create({
@@ -27,14 +36,13 @@ export class PatientService {
     number,
     phones,
   }: CreatePatientDto): Promise<Patient> {
-    const addresses: any[] = [];
+    const addresses: PatientAddress[] = [];
 
-    const { state, city, district, street } =
-      await this.addressService.getAddressZipcode(zipcode);
+    const address = await this.getAddress(zipcode);
 
-    const address = { state, city, district, street, number, zipcode };
+    const newAddress = { ...address, zipcode, number };
 
-    addresses.push(address);
+    addresses.push(newAddress);
 
     return this.repository.createPatient({
       name,
@@ -47,5 +55,13 @@ export class PatientService {
       addresses,
       phones,
     });
+  }
+
+  async addAddress(id: string, { number, zipcode }: CreatePatientAddressDto) {
+    const newAddress = await this.getAddress(zipcode);
+
+    const address: PatientAddress = { ...newAddress, zipcode, number };
+
+    return this.repository.addAddressToClient({ id, ...address });
   }
 }
