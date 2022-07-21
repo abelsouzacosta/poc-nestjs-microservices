@@ -1,52 +1,13 @@
-import {
-  IsEnum,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-  Max,
-  MaxLength,
-  Min,
-  MinLength,
-} from 'class-validator';
-import { FederativeUnitsEnum } from 'src/shared/enums/FederativeUnits.enum';
+import { IsNotEmpty, IsNumber, IsString, Max, Min } from 'class-validator';
 
 export class CreatePatientAddressDto {
-  country?: string;
-
   @IsString({
-    message: 'State must be a string',
-  })
-  @IsEnum(FederativeUnitsEnum, {
-    message: `State must have type ${FederativeUnitsEnum}`,
+    message: 'Zipcode must be a string',
   })
   @IsNotEmpty({
-    message: 'State must be provided',
+    message: 'Zipcode must be provided',
   })
-  state: string;
-
-  @IsString({
-    message: 'District must be a string',
-  })
-  @IsNotEmpty({
-    message: 'District must be provided',
-  })
-  district: string;
-
-  @IsString({
-    message: 'State must be a string',
-  })
-  @IsNotEmpty({
-    message: 'City m,ust be provided',
-  })
-  city: string;
-
-  @IsString({
-    message: 'Street must be a string',
-  })
-  @IsNotEmpty({
-    message: 'Street must be provided',
-  })
-  street: string;
+  zipcode: string;
 
   @IsNumber(
     {
@@ -55,31 +16,14 @@ export class CreatePatientAddressDto {
       maxDecimalPlaces: 0,
     },
     {
-      message: 'Number must be a integer number',
+      message: 'Number should be a integer between 1 and 10000',
     },
   )
-  @IsNotEmpty({
-    message: 'Number must be provided',
-  })
   @Min(1, {
-    message: 'Number must be between 1 and 10000',
+    message: 'Number should be between 1 and 10000',
   })
   @Max(10000, {
-    message: 'Number must be between 1 and 10000',
+    message: 'NUmber should be between 1 and 10000',
   })
   number: number;
-
-  @IsString({
-    message: 'zipcode must be a string',
-  })
-  @IsNotEmpty({
-    message: 'zipcode must be provided',
-  })
-  @MinLength(4, {
-    message: 'zipcode is too short',
-  })
-  @MaxLength(8, {
-    message: 'zipcode is too long',
-  })
-  zipcode: string;
 }
