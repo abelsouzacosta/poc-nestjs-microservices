@@ -3,6 +3,7 @@ import { AddressService } from './address.service';
 import { CreatePatientDto } from './dtos/CreatePatient.dto';
 import { CreatePatientAddressDto } from './dtos/CreatePatientAddress.dto';
 import { CreatePhoneNumberController } from './dtos/CreatePhoneNumberController.dto';
+import { UpdatePatientDto } from './dtos/UpdatePatient.dto';
 import { Patient } from './entities/Patient';
 import { PatientAddress } from './entities/PatientAddress';
 import { PatientRepository } from './patient.repository';
@@ -75,5 +76,9 @@ export class PatientService {
     }
 
     return this.repository.findById(id);
+  }
+
+  async update(id: string, { height, weight }: UpdatePatientDto) {
+    return this.repository.update({ id, height, weight });
   }
 }
