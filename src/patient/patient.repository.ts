@@ -3,6 +3,7 @@ import { Model } from 'mongoose';
 import { CreatePatientAddressRepositoryDto } from './dtos/CreatePatientAddressRepository.dto';
 import { CreatePatientRepositoryDto } from './dtos/CreatePatientRepository.dto';
 import { CreatePhoneNumberRepositoryDto } from './dtos/CreatePhoneNumberRepository.dto';
+import { UpdatePatientRepositoryDto } from './dtos/UpdatePatientRepository.dto';
 import { Patient } from './entities/Patient';
 
 export class PatientRepository {
@@ -79,6 +80,17 @@ export class PatientRepository {
       },
       {
         $push: { phones: phone },
+      },
+    );
+  }
+
+  async update({ id, height, weight }: UpdatePatientRepositoryDto) {
+    return this.model.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: { height, weight },
       },
     );
   }
