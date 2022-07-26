@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { AddressService } from './address.service';
 import { CreatePatientDto } from './dtos/CreatePatient.dto';
 import { CreatePatientAddressDto } from './dtos/CreatePatientAddress.dto';
@@ -6,6 +6,7 @@ import { CreatePhoneNumberController } from './dtos/CreatePhoneNumberController.
 import { UpdatePatientDto } from './dtos/UpdatePatient.dto';
 import { Patient } from './entities/Patient';
 import { PatientAddress } from './entities/PatientAddress';
+import { ImportService } from './import.service';
 import { PatientRepository } from './patient.repository';
 
 @Injectable()
@@ -13,6 +14,7 @@ export class PatientService {
   constructor(
     private readonly repository: PatientRepository,
     private readonly addressService: AddressService,
+    private readonly importService: ImportService,
   ) {}
 
   async list(): Promise<Array<Patient>> {
@@ -80,5 +82,44 @@ export class PatientService {
 
   async update(id: string, { height, weight }: UpdatePatientDto) {
     return this.repository.update({ id, height, weight });
+  }
+
+  async import(file: Express.Multer.File): Promise<void> {
+    const loadedFile = await this.importService.loadFile(file);
+
+    loadedFile.map(
+      async ({
+        name,
+        ssn,
+        email,
+        date_birth,
+        height,
+        weight,
+        blood_type,
+        zipcode,
+        number,
+      }) => {
+        const ssnAlreadyExists = await this.repository.findBySsn(ssn);
+
+        if (ssnAlreadyExists) {
+          Logger.log(
+            `ssn: ${ssn} already exists in the database - patient ignored`,
+          );
+        } else {
+          await this.create({
+            name,
+            ssn,
+            email,
+            date_birth,
+            height,
+            weight,
+            blood_type,
+            zipcode,
+            number,
+            phones: [],
+          });
+        }
+      },
+    );
   }
 }
