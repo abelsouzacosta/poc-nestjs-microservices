@@ -5,9 +5,12 @@ import {
   Param,
   Post,
   Put,
+  UploadedFile,
+  UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { CreatePatientDto } from './dtos/CreatePatient.dto';
 import { CreatePatientAddressDto } from './dtos/CreatePatientAddress.dto';
 import { CreatePhoneNumberController } from './dtos/CreatePhoneNumberController.dto';
@@ -45,5 +48,11 @@ export class PatientController {
   @UsePipes(ValidationPipe)
   async update(@Param('id') id: string, @Body() data: UpdatePatientDto) {
     return this.service.update(id, data);
+  }
+
+  @Post('/import')
+  @UseInterceptors(FileInterceptor('file'))
+  async import(@UploadedFile() file: Express.Multer.File) {
+    return this.service.import(file);
   }
 }
