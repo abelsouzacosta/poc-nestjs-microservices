@@ -7,8 +7,8 @@ import { UpdateDoctorDto } from './dto/update-doctor.dto';
 export class DoctorsService {
   constructor(private readonly repository: DoctorsRepository) {}
 
-  create(createDoctorDto: CreateDoctorDto) {
-    return 'This action adds a new doctor';
+  create(data: CreateDoctorDto) {
+    return this.repository.create(data);
   }
 
   findAll() {
