@@ -17,8 +17,4 @@ export class DoctorsService {
   findOne(id: string) {
     return this.repository.findById(id);
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} doctor`;
-  }
 }

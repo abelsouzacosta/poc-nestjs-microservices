@@ -4,7 +4,6 @@ import {
   Post,
   Body,
   Param,
-  Delete,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -29,10 +28,5 @@ export class DoctorsController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.doctorsService.findOne(id);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.doctorsService.remove(+id);
   }
 }
