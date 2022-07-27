@@ -1,15 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { DoctorsRepository } from './doctors.repository';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 
 @Injectable()
 export class DoctorsService {
+  constructor(private readonly repository: DoctorsRepository) {}
+
   create(createDoctorDto: CreateDoctorDto) {
     return 'This action adds a new doctor';
   }
 
   findAll() {
-    return `This action returns all doctors`;
+    return this.repository.getAll();
   }
 
   findOne(id: number) {
