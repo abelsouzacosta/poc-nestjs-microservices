@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { Doctor } from './entities/doctor.entity';
 
 @Injectable()
@@ -11,5 +12,17 @@ export class DoctorsRepository {
 
   async getAll(): Promise<Array<Doctor>> {
     return this.model.find();
+  }
+
+  async create({
+    name,
+    register,
+    speciality,
+  }: CreateDoctorDto): Promise<Doctor> {
+    return this.model.create({
+      name,
+      register,
+      speciality,
+    });
   }
 }
