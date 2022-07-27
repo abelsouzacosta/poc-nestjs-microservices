@@ -14,6 +14,10 @@ export class DoctorsRepository {
     return this.model.find();
   }
 
+  async findById(id: string): Promise<Doctor> {
+    return this.model.findById(id);
+  }
+
   async create({
     name,
     register,
