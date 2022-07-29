@@ -11,8 +11,8 @@ export class MedicinesService {
     return this.repository.create(data);
   }
 
-  findAll() {
-    return `This action returns all medicines`;
+  findAll(): Promise<Array<Medicine>> {
+    return this.repository.find();
   }
 
   findOne(id: number) {
