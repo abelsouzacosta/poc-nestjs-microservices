@@ -43,11 +43,9 @@ export class MedicinesController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateMedicineDto: UpdateMedicineDto,
-  ) {
-    return this.medicinesService.update(id, updateMedicineDto);
+  @UsePipes(new ValidationPipe())
+  update(@Param('id') id: string, @Body() data: UpdateMedicineDto) {
+    return this.medicinesService.update(id, data);
   }
 
   @Delete(':id')
