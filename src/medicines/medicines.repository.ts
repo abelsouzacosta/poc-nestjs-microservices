@@ -18,6 +18,14 @@ export class MedicinesRepository {
     return !result ? false : true;
   }
 
+  async find(): Promise<Array<Medicine>> {
+    return this.model.find();
+  }
+
+  async findById(id: string): Promise<Medicine> {
+    return this.model.findById(id);
+  }
+
   async create(medicine: CreateMedicineDto) {
     return this.model.create(medicine);
   }
