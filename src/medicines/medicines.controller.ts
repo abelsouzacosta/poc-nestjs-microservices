@@ -44,6 +44,7 @@ export class MedicinesController {
 
   @Patch(':id')
   @UsePipes(new ValidationPipe())
+  @HttpCode(HttpStatus.CREATED)
   update(@Param('id') id: string, @Body() data: UpdateMedicineDto) {
     return this.medicinesService.update(id, data);
   }
