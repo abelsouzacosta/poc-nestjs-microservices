@@ -7,8 +7,8 @@ import { MedicinesRepository } from './medicines.repository';
 export class MedicinesService {
   constructor(private readonly repository: MedicinesRepository) {}
 
-  create(createMedicineDto: CreateMedicineDto) {
-    return this.repository.create(createMedicineDto);
+  create(data: CreateMedicineDto): Promise<Medicine> {
+    return this.repository.create(data);
   }
 
   findAll() {
