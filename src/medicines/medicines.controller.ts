@@ -15,6 +15,7 @@ import { MedicinesService } from './medicines.service';
 import { CreateMedicineDto } from './dto/create-medicine.dto';
 import { UpdateMedicineDto } from './dto/update-medicine.dto';
 import { ProductCodeAlreadyExistsPipe } from './pipes/product-code-already-exists.pipe';
+import { MedicineNotFoundPipe } from './pipes/medicine-not-found.pipe';
 
 @Controller('medicines')
 export class MedicinesController {
@@ -38,20 +39,23 @@ export class MedicinesController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', MedicineNotFoundPipe) id: string) {
     return this.medicinesService.findOne(id);
   }
 
   @Patch(':id')
   @UsePipes(new ValidationPipe())
   @HttpCode(HttpStatus.CREATED)
-  update(@Param('id') id: string, @Body() data: UpdateMedicineDto) {
+  update(
+    @Param('id', MedicineNotFoundPipe) id: string,
+    @Body() data: UpdateMedicineDto,
+  ) {
     return this.medicinesService.update(id, data);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: string) {
+  remove(@Param('id', MedicineNotFoundPipe) id: string) {
     return this.medicinesService.remove(id);
   }
 }
