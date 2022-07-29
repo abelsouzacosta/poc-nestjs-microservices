@@ -8,6 +8,8 @@ import {
   Delete,
   UsePipes,
   ValidationPipe,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { MedicinesService } from './medicines.service';
 import { CreateMedicineDto } from './dto/create-medicine.dto';
@@ -20,6 +22,7 @@ export class MedicinesController {
 
   @Post()
   @UsePipes(new ValidationPipe())
+  @HttpCode(HttpStatus.CREATED)
   create(
     @Body(ProductCodeAlreadyExistsPipe)
     data: CreateMedicineDto,
@@ -28,11 +31,13 @@ export class MedicinesController {
   }
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   findAll() {
     return this.medicinesService.findAll();
   }
 
   @Get(':id')
+  @HttpCode(HttpStatus.OK)
   findOne(@Param('id') id: string) {
     return this.medicinesService.findOne(id);
   }
