@@ -19,7 +19,7 @@ export class MedicinesService {
     return this.repository.findById(id);
   }
 
-  update(id: number, updateMedicineDto: UpdateMedicineDto) {
+  update(id: string, updateMedicineDto: UpdateMedicineDto) {
     return `This action updates a #${id} medicine`;
   }
 
