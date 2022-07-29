@@ -25,6 +25,6 @@ export class MedicinesService {
   }
 
   remove(id: string) {
-    return `This action removes a #${id} medicine`;
+    return this.repository.delete(id);
   }
 }
