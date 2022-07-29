@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateMedicineDto } from './dto/create-medicine.dto';
+import { UpdateMedicineDto } from './dto/update-medicine.dto';
 import { Medicine } from './entities/medicine.entity';
 
 @Injectable()
@@ -28,5 +29,23 @@ export class MedicinesRepository {
 
   async create(medicine: CreateMedicineDto): Promise<Medicine> {
     return this.model.create(medicine);
+  }
+
+  async update(
+    id: string,
+    { name, dosage, active_ingredient, brand, manufacturer }: UpdateMedicineDto,
+  ) {
+    return this.model.updateOne(
+      {
+        _id: id,
+      },
+      {
+        name,
+        dosage,
+        active_ingredient,
+        brand,
+        manufacturer,
+      },
+    );
   }
 }
