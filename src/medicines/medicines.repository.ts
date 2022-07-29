@@ -26,7 +26,7 @@ export class MedicinesRepository {
     return this.model.findById(id);
   }
 
-  async create(medicine: CreateMedicineDto) {
+  async create(medicine: CreateMedicineDto): Promise<Medicine> {
     return this.model.create(medicine);
   }
 }
