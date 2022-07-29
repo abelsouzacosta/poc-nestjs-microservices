@@ -22,9 +22,9 @@ export class MedicinesController {
   @UsePipes(new ValidationPipe())
   create(
     @Body(ProductCodeAlreadyExistsPipe)
-    createMedicineDto: CreateMedicineDto,
+    data: CreateMedicineDto,
   ) {
-    return this.medicinesService.create(createMedicineDto);
+    return this.medicinesService.create(data);
   }
 
   @Get()
