@@ -15,8 +15,8 @@ export class MedicinesService {
     return this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} medicine`;
+  findOne(id: string): Promise<Medicine> {
+    return this.repository.findById(id);
   }
 
   update(id: number, updateMedicineDto: UpdateMedicineDto) {
