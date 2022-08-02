@@ -12,7 +12,7 @@ import { MulterModule } from '@nestjs/platform-express';
   imports: [
     MongooseModule.forFeature([{ name: Patient.name, schema: PatientSchema }]),
     MulterModule.register({
-      dest: './uploads',
+      dest: './uploads/patients',
     }),
   ],
   providers: [PatientRepository, PatientService, AddressService, ImportService],
