@@ -48,8 +48,6 @@ export class MedicinesService {
         const productCodeAlreadyExists =
           await this.repository.findByProductCode(product_code);
 
-        console.log(productCodeAlreadyExists);
-
         if (productCodeAlreadyExists)
           Logger.log(
             `product_code ${product_code} already exists in the database - medicine will be ignored`,
