@@ -10,12 +10,15 @@ import {
   ValidationPipe,
   HttpCode,
   HttpStatus,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { MedicinesService } from './medicines.service';
 import { CreateMedicineDto } from './dto/create-medicine.dto';
 import { UpdateMedicineDto } from './dto/update-medicine.dto';
 import { ProductCodeAlreadyExistsPipe } from './pipes/product-code-already-exists.pipe';
 import { MedicineNotFoundPipe } from './pipes/medicine-not-found.pipe';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('medicines')
 export class MedicinesController {
@@ -57,5 +60,11 @@ export class MedicinesController {
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', MedicineNotFoundPipe) id: string) {
     return this.medicinesService.remove(id);
+  }
+
+  @Post('/import')
+  @UseInterceptors(FileInterceptor('file'))
+  import(@UploadedFile() file: Express.Multer.File) {
+    return this.medicinesService.import(file);
   }
 }
