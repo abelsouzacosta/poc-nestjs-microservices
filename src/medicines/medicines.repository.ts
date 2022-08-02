@@ -12,7 +12,7 @@ export class MedicinesRepository {
   ) {}
 
   async findByProductCode(product_code: string): Promise<boolean> {
-    const result = this.model.findOne({
+    const result = await this.model.findOne({
       product_code,
     });
 
