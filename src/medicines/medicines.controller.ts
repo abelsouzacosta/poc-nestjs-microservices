@@ -64,6 +64,7 @@ export class MedicinesController {
 
   @Post('/import')
   @UseInterceptors(FileInterceptor('file'))
+  @HttpCode(HttpStatus.NO_CONTENT)
   import(@UploadedFile() file: Express.Multer.File) {
     return this.medicinesService.import(file);
   }
