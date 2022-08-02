@@ -22,7 +22,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('medicines')
 export class MedicinesController {
-  constructor(private readonly medicinesService: MedicinesService) {}
+  constructor(private readonly service: MedicinesService) {}
 
   @Post()
   @UsePipes(new ValidationPipe())
@@ -31,19 +31,19 @@ export class MedicinesController {
     @Body(ProductCodeAlreadyExistsPipe)
     data: CreateMedicineDto,
   ) {
-    return this.medicinesService.create(data);
+    return this.service.create(data);
   }
 
   @Get()
   @HttpCode(HttpStatus.OK)
   findAll() {
-    return this.medicinesService.findAll();
+    return this.service.findAll();
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   findOne(@Param('id', MedicineNotFoundPipe) id: string) {
-    return this.medicinesService.findOne(id);
+    return this.service.findOne(id);
   }
 
   @Patch(':id')
@@ -53,19 +53,19 @@ export class MedicinesController {
     @Param('id', MedicineNotFoundPipe) id: string,
     @Body() data: UpdateMedicineDto,
   ) {
-    return this.medicinesService.update(id, data);
+    return this.service.update(id, data);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', MedicineNotFoundPipe) id: string) {
-    return this.medicinesService.remove(id);
+    return this.service.remove(id);
   }
 
   @Post('/import')
   @UseInterceptors(FileInterceptor('file'))
   @HttpCode(HttpStatus.NO_CONTENT)
   import(@UploadedFile() file: Express.Multer.File) {
-    return this.medicinesService.import(file);
+    return this.service.import(file);
   }
 }
