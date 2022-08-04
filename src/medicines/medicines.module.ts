@@ -29,6 +29,10 @@ export class MedicinesModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(MedicineNotFoundMiddleware)
-      .forRoutes({ path: 'medicines/:id', method: RequestMethod.DELETE });
+      .forRoutes(
+        { path: 'medicines/:id', method: RequestMethod.DELETE },
+        { path: 'medicines/:id', method: RequestMethod.PATCH },
+        { path: 'medicines/:id', method: RequestMethod.GET },
+      );
   }
 }
