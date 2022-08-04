@@ -5,7 +5,7 @@ import {
   NestMiddleware,
 } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import { MedicinesRepository } from '../medicines.repository';
+import { MedicinesRepository } from '../../medicines.repository';
 
 @Injectable()
 export class MedicineNotFoundMiddleware implements NestMiddleware {

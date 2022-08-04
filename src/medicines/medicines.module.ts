@@ -11,7 +11,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Medicine, MedicineSchema } from './entities/medicine.entity';
 import { MulterModule } from '@nestjs/platform-express';
 import { ImportService } from 'src/medicines/import.service';
-import { MedicineNotFoundMiddleware } from './middlewares/medicine-not-found.middleware';
+import { MedicineNotFoundMiddleware } from './infra/middlewares/medicine-not-found.middleware';
 
 @Module({
   imports: [
