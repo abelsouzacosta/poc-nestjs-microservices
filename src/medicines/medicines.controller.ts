@@ -16,7 +16,7 @@ import {
 import { MedicinesService } from './medicines.service';
 import { CreateMedicineDto } from './dto/create-medicine.dto';
 import { UpdateMedicineDto } from './dto/update-medicine.dto';
-import { ProductCodeAlreadyExistsPipe } from './pipes/product-code-already-exists.pipe';
+import { ProductCodeAlreadyExistsPipe } from './infra/pipes/product-code-already-exists.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('medicines')
