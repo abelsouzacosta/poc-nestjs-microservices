@@ -1,11 +1,7 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NestMiddleware,
-} from '@nestjs/common';
+import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { MedicinesRepository } from '../../medicines.repository';
+import { MedicineNotFoundException } from '../exceptions/medicine-not-found.exception';
 
 @Injectable()
 export class MedicineNotFoundMiddleware implements NestMiddleware {
@@ -16,11 +12,7 @@ export class MedicineNotFoundMiddleware implements NestMiddleware {
 
     const medicineFound = await this.repository.findById(id);
 
-    if (!medicineFound)
-      throw new HttpException(
-        `Mecicine not found with id ${id}`,
-        HttpStatus.NOT_FOUND,
-      );
+    if (!medicineFound) throw new MedicineNotFoundException(id);
 
     next();
   }
