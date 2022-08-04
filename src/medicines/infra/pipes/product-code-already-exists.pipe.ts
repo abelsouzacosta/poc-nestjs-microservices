@@ -6,8 +6,8 @@ import {
   Injectable,
   PipeTransform,
 } from '@nestjs/common';
-import { CreateMedicineDto } from '../dto/create-medicine.dto';
-import { MedicinesRepository } from '../medicines.repository';
+import { CreateMedicineDto } from '../../dto/create-medicine.dto';
+import { MedicinesRepository } from '../../medicines.repository';
 
 @Injectable()
 export class ProductCodeAlreadyExistsPipe implements PipeTransform {
