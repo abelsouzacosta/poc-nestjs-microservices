@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Put,
   UploadedFile,
@@ -32,13 +33,13 @@ export class PatientController {
     return this.service.create(data);
   }
 
-  @Post('/add_address/:id')
+  @Patch('/add_address/:id')
   @UsePipes(ValidationPipe)
   addAddress(@Param('id') id: string, @Body() data: CreatePatientAddressDto) {
     return this.service.addAddress(id, data);
   }
 
-  @Post('/add_phones/:id')
+  @Patch('/add_phones/:id')
   @UsePipes(ValidationPipe)
   addPhone(@Param('id') id: string, @Body() data: CreatePhoneNumberController) {
     return this.service.addPhone(id, data);
